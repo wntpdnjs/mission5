@@ -27,4 +27,20 @@ public class Store extends BaseEntity {
 
     @Column(name = "score", nullable = false)
     private Float score;
+
+    // Region과의 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id", nullable = false)  // 외래키 설정
+    private region region;  // region 필드 추가
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", score=" + score +
+                ", region=" + (region != null ? region.getName() : "N/A") + // region의 이름 출력
+                '}';
+    }
 }
