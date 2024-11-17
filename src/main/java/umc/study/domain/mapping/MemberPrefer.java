@@ -5,7 +5,6 @@ import lombok.*;
 import umc.study.domain.FoodCategory;
 import umc.study.domain.Member;
 import umc.study.domain.base.BaseEntity;
-
 @Entity
 @Getter
 @Builder
@@ -25,5 +24,14 @@ public class MemberPrefer extends BaseEntity {
     @JoinColumn(name = "category_id")
     private FoodCategory foodCategory;
 
+    public void setMember(Member member){
+        if(this.member != null)
+            member.getMemberPreferList().remove(this);
+        this.member = member;
+        member.getMemberPreferList().add(this);
+    }
 
+    public void setFoodCategory(FoodCategory foodCategory){
+        this.foodCategory = foodCategory;
+    }
 }
