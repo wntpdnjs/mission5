@@ -18,26 +18,43 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Spring Boot 기본 의존성
     implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'  // Hibernate 6.0.2 이상
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.5.Final'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // SpringDoc for Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+
+    // Jakarta Annotations (QueryDSL 관련)
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+    // MySQL Connector
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 테스트 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
+// QueryDSL로 생성된 소스 코드 경로
 def generated = file("src/main/generated")
 
 sourceSets {
@@ -57,4 +74,3 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
-

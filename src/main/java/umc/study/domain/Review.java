@@ -1,36 +1,41 @@
 package umc.study.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 import umc.study.domain.base.BaseEntity;
+
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "review")
 public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//
-//    @Column(nullable = false, length = 100)
-//    private String title;
 
+    private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String body;
-
-    @Column(nullable = false)
     private Float score;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id", nullable = false)
-//    private Member member;
+    private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
     private Store store;
+
+
+    public void setStore(Store store){
+        if (this.score != null)
+            store.getReviewList().remove(this);
+        this.store = store;
+        store.getReviewList().add(this);
+    }
 }

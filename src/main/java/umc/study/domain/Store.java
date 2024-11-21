@@ -1,37 +1,39 @@
 package umc.study.domain;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import umc.study.domain.base.BaseEntity;
+
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "store")
 public class Store extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "store_id") // 데이터베이스의 store_id와 매핑
     private Long id;
 
-    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "address", length = 50, nullable = false)
     private String address;
 
-    @Column(name = "score", nullable = false)
     private Float score;
 
-    // Region과의 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id", nullable = false)  // 외래키 설정
-    private region region;  // region 필드 추가
+    @JoinColumn(name = "region_id")
+    private region region;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Mission> missionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
 
     @Override
     public String toString() {

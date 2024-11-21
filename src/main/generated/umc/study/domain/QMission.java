@@ -27,11 +27,15 @@ public class QMission extends EntityPathBase<Mission> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final DatePath<java.time.LocalDate> deadline = createDate("deadline", java.time.LocalDate.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<umc.study.domain.mapping.MemberMission, umc.study.domain.mapping.QMemberMission> memberMissionList = this.<umc.study.domain.mapping.MemberMission, umc.study.domain.mapping.QMemberMission>createList("memberMissionList", umc.study.domain.mapping.MemberMission.class, umc.study.domain.mapping.QMemberMission.class, PathInits.DIRECT2);
 
     public final StringPath missionSpec = createString("missionSpec");
+
+    public final NumberPath<Integer> reward = createNumber("reward", Integer.class);
 
     public final QStore store;
 

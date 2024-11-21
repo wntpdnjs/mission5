@@ -1,37 +1,35 @@
 package umc.study.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
-
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import umc.study.domain.base.BaseEntity;
 import umc.study.domain.enums.Gender;
-import umc.study.domain.enums.MemberStatus;
 import umc.study.domain.enums.SocialType;
-import jakarta.persistence.Id;
+import umc.study.domain.enums.MemberStatus;
 import umc.study.domain.mapping.MemberAgree;
 import umc.study.domain.mapping.MemberMission;
 import umc.study.domain.mapping.MemberPrefer;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Builder
-@Table(name = "member")
 @DynamicUpdate
 @DynamicInsert
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "member_id") // 테이블 컬럼 이름에 맞게 매핑
+    private Long memberId;
 
     @Column(nullable = false, length = 20)
     private String name;
@@ -55,12 +53,11 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    @Column(nullable = false, length = 50)
+    //    @Column(nullable = false, length = 50)
     private String email;
 
     @ColumnDefault("0")
     private Integer point;
-
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();
@@ -68,6 +65,8 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberPrefer> memberPreferList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();

@@ -1,25 +1,25 @@
 package umc.study.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.study.domain.base.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "region")
 public class region extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 20, nullable = false, unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    private List<Store> storeList = new ArrayList<>();
 }

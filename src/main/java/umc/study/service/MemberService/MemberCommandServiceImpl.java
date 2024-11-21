@@ -1,8 +1,8 @@
 package umc.study.service.MemberService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.FoodCategoryHandler;
 import umc.study.converter.MemberConverter;
@@ -17,8 +17,6 @@ import umc.study.web.dto.MemberRequestDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-
 @Service
 @RequiredArgsConstructor
 public class MemberCommandServiceImpl implements MemberCommandService{
@@ -27,8 +25,8 @@ public class MemberCommandServiceImpl implements MemberCommandService{
 
     private final FoodCategoryRepository foodCategoryRepository;
 
-    @Transactional
     @Override
+    @Transactional
     public Member joinMember(MemberRequestDTO.JoinDto request) {
 
         Member newMember = MemberConverter.toMember(request);
