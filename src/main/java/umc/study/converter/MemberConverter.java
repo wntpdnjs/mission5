@@ -43,6 +43,9 @@ public class MemberConverter {
         return Member.builder()
                 .address(request.getAddress())
                 .specAddress(request.getSpecAddress())
+                .email(request.getEmail())   // 추가된 코드
+                .password(request.getPassword())   // 추가된 코드
+                .role(request.getRole())   // 추가된 코드
                 .gender(gender)
                 .name(request.getName())
                 .memberPreferList(new ArrayList<>())

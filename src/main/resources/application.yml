@@ -1,4 +1,22 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-authentication-method: client_secret_post
+            client-id: f02dc179ecab99829f54c8924d2be201
+            client-secret: GVilQ1OHUAiLHpMiZfmr1jDhilTZVRW4
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            scope: profile_nickname
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
   datasource:
     url: jdbc:mysql://localhost:3306/study
     username: sewon
@@ -13,7 +31,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        show_sql: true
-        format_sql: true
+        show_sql: true   # SQL 실행 로그 출력
+        format_sql: true # SQL 포매팅
         use_sql_comments: true
         default_batch_fetch_size: 1000
+  show-sql: true         # SQL 로그 출력 설정 (전역)

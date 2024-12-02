@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import umc.study.domain.base.BaseEntity;
 import umc.study.domain.enums.Gender;
+import umc.study.domain.enums.Role;
 import umc.study.domain.enums.SocialType;
 import umc.study.domain.enums.MemberStatus;
 import umc.study.domain.mapping.MemberAgree;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "member")
 @DynamicUpdate
 @DynamicInsert
 @Builder
@@ -28,7 +30,7 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id") // 테이블 컬럼 이름에 맞게 매핑
+    @Column(name = "member_id")
     private Long memberId;
 
     @Column(nullable = false, length = 20)
@@ -53,8 +55,14 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    //    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ColumnDefault("0")
     private Integer point;
@@ -70,4 +78,8 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }
